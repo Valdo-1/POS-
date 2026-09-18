@@ -74,8 +74,8 @@
 
     <div class="receipt-card">
         <div class="text-center">
-            <h2 style="margin: 0 0 4px 0;">COFFE ALDO</h2>
-            <div class="fw-bold">Coffe PPKD Jakarta Pusat</div>
+            <h2 style="margin: 0 0 4px 0;">KETARA COFFEE</h2>
+            <div class="fw-bold">KETARA PPKD Jakarta Pusat</div>
             <div style="font-size: 11px;">Jl. Karet Pasar Baru Barat V No. 23, RT. 3/RW. 7, Karet Tengsin, Kecamatan Tanah Abang, Kota Jakarta Pusat</div>
             <div style="font-size: 11px;">Telp: 0812 8477 5339</div>
         </div>
@@ -150,7 +150,7 @@
         <div class="dashed-line"></div>
 
         <div class="text-center" style="font-size: 11px; margin-top: 10px;">
-            <div> Coffe Aldo PPKD Jakarta Pusat </div>
+            <div> KETARA PPKD Jakarta Pusat </div>
             <div>TERIMA KASIH</div>
             <div style="margin-top: 4px; color: #666;">Selamat Datang Kembali </div>
             <div style="margin-top: 4px; color: #666;">Kritik Dan Saran Bisa WA: 0812-8477-5339</div>

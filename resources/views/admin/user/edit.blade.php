@@ -1,59 +1,76 @@
 @extends('app')
 
 @section('header')
-<div class="page-header">
+<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-        <h1 class="page-title">Edit User</h1>
-        <p class="page-subtitle">Update an existing user.</p>
+        <h1 class="text-2xl font-black text-slate-800 tracking-tight">EDIT AKUN USER</h1>
+        <p class="text-slate-500 text-sm">Perbarui profil dan wewenang role user KETARA</p>
     </div>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}" class="text-decoration-none text-muted-green">Users</a></li>
-            <li class="breadcrumb-item active text-main" aria-current="page">Edit</li>
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 text-xs font-semibold">
+            <li><a href="{{ route('dashboard') }}" class="text-slate-500 hover:text-emerald-600">Home</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li><a href="{{ route('users.index') }}" class="text-slate-500 hover:text-emerald-600">Users</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li class="text-emerald-700 font-bold" aria-current="page">Edit</li>
         </ol>
     </nav>
 </div>
 @endsection
 
 @section('content')
-<div class="card p-4 border-light shadow-sm">
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+<div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs max-w-3xl">
+    <form action="{{ route('users.update', $user->id) }}" method="POST" class="space-y-5">
         @csrf
         @method('PUT')
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}" required>
-                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required>
-                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+
+        <div>
+            <label for="name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Lengkap <span class="text-rose-500">*</span></label>
+            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" 
+                   class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" required>
+            @error('name')
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
+            @enderror
         </div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="password" class="form-label">Password <small class="text-muted">(Leave empty to keep current)</small></label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
-                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="role_id" class="form-label">Role</label>
-                <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id">
-                    <option value="">Select Role</option>
-                    @foreach($roles as $role)
-                        <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
-                    @endforeach
-                </select>
-                @error('role_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+
+        <div>
+            <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Email Address <span class="text-rose-500">*</span></label>
+            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" 
+                   class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" required>
+            @error('email')
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
+            @enderror
         </div>
-        
-        <div class="text-end">
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Update User</button>
+
+        <div>
+            <label for="password" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Password Baru (Opsional)</label>
+            <input type="password" name="password" id="password" 
+                   class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="Kosongkan jika tidak ingin mengubah password">
+            @error('password')
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div>
+            <label for="role_id" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Pilih Role / Jabatan <span class="text-rose-500">*</span></label>
+            <select name="role_id" id="role_id" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:border-emerald-500" required>
+                <option value="">-- Pilih Role --</option>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
+                        {{ strtoupper($role->name) }}
+                    </option>
+                @endforeach
+            </select>
+            @error('role_id')
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+            <a href="{{ route('users.index') }}" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition-colors">Batal</a>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center gap-1">
+                <i class="bi bi-save"></i> Perbarui User
+            </button>
         </div>
     </form>
 </div>

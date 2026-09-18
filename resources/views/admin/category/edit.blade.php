@@ -1,36 +1,43 @@
 @extends('app')
 
 @section('header')
-<div class="page-header">
+<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-        <h1 class="page-title">Edit Category</h1>
-        <p class="page-subtitle">Update an existing product category.</p>
+        <h1 class="text-2xl font-black text-slate-800 tracking-tight">EDIT KATEGORI PRODUK</h1>
+        <p class="text-slate-500 text-sm">Perbarui nama kategori menu resto KETARA</p>
     </div>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}" class="text-decoration-none text-muted-green">Categories</a></li>
-            <li class="breadcrumb-item active text-main" aria-current="page">Edit</li>
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 text-xs font-semibold">
+            <li><a href="{{ route('dashboard') }}" class="text-slate-500 hover:text-emerald-600">Home</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li><a href="{{ route('categories.index') }}" class="text-slate-500 hover:text-emerald-600">Categories</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li class="text-emerald-700 font-bold" aria-current="page">Edit</li>
         </ol>
     </nav>
 </div>
 @endsection
 
 @section('content')
-<div class="card p-4 border-light shadow-sm">
-    <form action="{{ route('categories.update', $category->id) }}" method="POST">
+<div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs max-w-2xl">
+    <form action="{{ route('categories.update', $category->id) }}" method="POST" class="space-y-5">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label for="category_name" class="form-label">Category Name</label>
-            <input type="text" class="form-control @error('category_name') is-invalid @enderror" id="category_name" name="category_name" value="{{ old('category_name', $category->category_name) }}" required>
+
+        <div>
+            <label for="category_name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Kategori <span class="text-rose-500">*</span></label>
+            <input type="text" name="category_name" id="category_name" value="{{ old('category_name', $category->category_name) }}" 
+                   class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" required>
             @error('category_name')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
             @enderror
         </div>
-        <div class="text-end">
-            <a href="{{ route('categories.index') }}" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Update Category</button>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+            <a href="{{ route('categories.index') }}" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition-colors">Batal</a>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center gap-1">
+                <i class="bi bi-save"></i> Perbarui Kategori
+            </button>
         </div>
     </form>
 </div>

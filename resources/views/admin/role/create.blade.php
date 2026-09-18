@@ -1,77 +1,90 @@
 @extends('app')
 
 @section('header')
-<div class="page-header">
+<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-        <h1 class="page-title">Tambah Role Baru</h1>
-        <p class="page-subtitle">Buat role baru dan atur hak akses fitur (permissions) untuk role ini.</p>
+        <h1 class="text-2xl font-black text-slate-800 tracking-tight">TAMBAH ROLE BARU</h1>
+        <p class="text-slate-500 text-sm">Buat role baru dan konfigurasikan izin fitur (permissions) KETARA</p>
     </div>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('roles.index') }}" class="text-decoration-none text-muted-green">Roles</a></li>
-            <li class="breadcrumb-item active text-main" aria-current="page">Create</li>
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 text-xs font-semibold">
+            <li><a href="{{ route('dashboard') }}" class="text-slate-500 hover:text-emerald-600">Home</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li><a href="{{ route('roles.index') }}" class="text-slate-500 hover:text-emerald-600">Roles</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li class="text-emerald-700 font-bold" aria-current="page">Create</li>
         </ol>
     </nav>
 </div>
 @endsection
 
 @section('content')
-<div class="card p-4 border-light shadow-sm">
-    <form action="{{ route('roles.store') }}" method="POST">
+<div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs max-w-4xl">
+    <form action="{{ route('roles.store') }}" method="POST" class="space-y-6">
         @csrf
         
         <!-- Input Nama Role -->
-        <div class="mb-4">
-            <label for="name" class="form-label fw-bold fs-6">Nama Role / Jabatan <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" 
-                   id="name" name="name" value="{{ old('name') }}" placeholder="Contoh: gudang, kasir_shift_malam, manager" required>
+        <div>
+            <label for="name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama Role / Jabatan <span class="text-rose-500">*</span></label>
+            <input type="text" id="name" name="name" value="{{ old('name') }}" 
+                   placeholder="Contoh: gudang, kasir_shift_malam, supervisor" 
+                   class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" required>
             @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="text-rose-500 text-xs mt-1">{{ $message }}</div>
             @enderror
-            <div class="form-text">Masukkan nama role yang deskriptif untuk menentukan jabatan pengguna.</div>
+            <div class="text-slate-400 text-xs mt-1">Masukkan nama peran deskriptif untuk menentukan wewenang pengguna.</div>
         </div>
 
-        <hr class="my-4">
+        <hr class="border-slate-100">
 
-        <!-- Pengaturan Hak Akses (Permissions) -->
-        <div class="mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- Pengaturan Hak Akses (Permissions Grid) -->
+        <div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div>
-                    <h5 class="fw-bold mb-1"><i class="bi bi-shield-check text-success me-2"></i>Pilih Hak Akses (Permissions)</h5>
-                    <p class="text-muted small mb-0">Centang fitur yang boleh diakses oleh pengguna dengan role ini (misal: role Gudang hanya centang STOK Produk dan Produk).</p>
+                    <h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+                        <i class="bi bi-shield-check text-emerald-600"></i>
+                        <span>Pilih Hak Akses (Permissions)</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">Centang fitur yang boleh diakses oleh role ini (misal: role Gudang hanya centang STOK PRODUK dan Produk).</p>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-outline-success me-1" id="btn-select-all"><i class="bi bi-check-all"></i> Pilih Semua</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-deselect-all"><i class="bi bi-x-circle"></i> Batal Semua</button>
+                <div class="flex items-center gap-2">
+                    <button type="button" class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold transition-colors cursor-pointer" id="btn-select-all">
+                        <i class="bi bi-check-all"></i> Pilih Semua
+                    </button>
+                    <button type="button" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200 text-xs font-bold transition-colors cursor-pointer" id="btn-deselect-all">
+                        <i class="bi bi-x-circle"></i> Batal Semua
+                    </button>
                 </div>
             </div>
 
-            <div class="row g-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($availablePermissions as $key => $perm)
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border p-3 permission-card shadow-sm-hover">
-                        <div class="form-check">
-                            <input class="form-check-input permission-checkbox" type="checkbox" name="permissions[]" 
-                                   value="{{ $key }}" id="perm_{{ $key }}"
-                                   {{ is_array(old('permissions')) && in_array($key, old('permissions')) ? 'checked' : '' }}>
-                            <label class="form-check-label fw-bold text-dark d-block cursor-pointer ms-2" for="perm_{{ $key }}">
-                                <i class="bi {{ $perm['icon'] }} text-success me-1"></i> {{ $perm['label'] }}
-                            </label>
-                            <small class="text-muted d-block mt-1 ms-2 fs-7">{{ $perm['desc'] }}</small>
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 hover:border-emerald-500 hover:bg-white transition-all cursor-pointer group">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="permissions[]" value="{{ $key }}" 
+                               class="permission-checkbox mt-1 w-4 h-4 text-emerald-600 bg-white border-slate-300 rounded focus:ring-emerald-500"
+                               {{ is_array(old('permissions')) && in_array($key, old('permissions')) ? 'checked' : '' }}>
+                        <div>
+                            <div class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
+                                <i class="bi {{ $perm['icon'] }} text-emerald-600"></i>
+                                {{ $perm['label'] }}
+                            </div>
+                            <div class="text-[11px] text-slate-400 mt-1 leading-snug">{{ $perm['desc'] }}</div>
                         </div>
-                    </div>
+                    </label>
                 </div>
                 @endforeach
             </div>
             @error('permissions')
-                <div class="text-danger small mt-2">{{ $message }}</div>
+                <div class="text-rose-500 text-xs mt-2">{{ $message }}</div>
             @enderror
         </div>
 
-        <div class="text-end pt-3 border-top">
-            <a href="{{ route('roles.index') }}" class="btn btn-secondary me-2"><i class="bi bi-x-lg"></i> Batal</a>
-            <button type="submit" class="btn btn-success px-4"><i class="bi bi-save me-1"></i> Simpan Role & Hak Akses</button>
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+            <a href="{{ route('roles.index') }}" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition-colors">Batal</a>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center gap-1">
+                <i class="bi bi-save"></i> Simpan Role & Hak Akses
+            </button>
         </div>
     </form>
 </div>

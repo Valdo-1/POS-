@@ -1,101 +1,114 @@
 @extends('app')
 
 @section('header')
-<div class="page-header">
+<div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
-        <h1 class="page-title">Management Role & Hak Akses</h1>
-        <p class="page-subtitle">Kelola peran pengguna dan atur hak akses fitur (permissions).</p>
+        <h1 class="text-2xl font-black text-slate-800 tracking-tight">ROLE & HAK AKSES</h1>
+        <p class="text-slate-500 text-sm">Kelola peran pengguna dan atur hak akses fitur (permissions) KETARA</p>
     </div>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
-            <li class="breadcrumb-item active text-main" aria-current="page">Roles</li>
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 text-xs font-semibold">
+            <li><a href="{{ route('dashboard') }}" class="text-slate-500 hover:text-emerald-600">Home</a></li>
+            <li><span class="text-slate-300">/</span></li>
+            <li class="text-emerald-700 font-bold" aria-current="page">Roles</li>
         </ol>
     </nav>
 </div>
 @endsection
 
 @section('content')
-<div class="card p-4 border-light shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
+    <div class="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
-            <h4 class="mb-1 fw-bold">Daftar Role & Hak Akses</h4>
-            <p class="text-muted small mb-0">Role menentukan menu dan aksi apa saja yang boleh diakses pengguna.</p>
+            <h3 class="font-bold text-lg text-slate-800">Daftar Role & Hak Akses</h3>
+            <p class="text-xs text-slate-400">Role menentukan menu dan aksi apa saja yang boleh diakses pengguna.</p>
         </div>
-        <a href="{{ route('roles.create') }}" class="btn btn-success"><i class="bi bi-plus-lg me-1"></i> Tambah Role Baru</a>
+        <a href="{{ route('roles.create') }}" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors">
+            <i class="bi bi-plus-lg text-sm"></i> Tambah Role Baru
+        </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-600">
+            <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                    <th style="width: 60px;">ID</th>
-                    <th style="width: 180px;">Nama Role</th>
-                    <th>Hak Akses (Permissions)</th>
-                    <th style="width: 140px;">Dibuat Pada</th>
-                    <th style="width: 110px;" class="text-end">Aksi</th>
+                    <th class="py-3 px-4 w-12">ID</th>
+                    <th class="py-3 px-4 w-44">Nama Role</th>
+                    <th class="py-3 px-4">Hak Akses (Permissions)</th>
+                    <th class="py-3 px-4 w-32">Dibuat Pada</th>
+                    <th class="py-3 px-4 text-right w-24">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-100">
                 @forelse($roles as $role)
                 @php
                     $roleName = strtolower(trim($role->name));
                     $isAdmin = in_array($roleName, ['admin', 'administrator']);
                     $perms = $role->permissions ?? [];
                 @endphp
-                <tr>
-                    <td class="fw-semibold">#{{ $role->id }}</td>
-                    <td>
-                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1.5 fs-6 fw-bold">
-                            <i class="bi bi-shield-person me-1"></i>{{ strtoupper($role->name) }}
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                    <td class="py-3 px-4 font-semibold text-slate-800">#{{ $role->id }}</td>
+                    <td class="py-3 px-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <i class="bi bi-shield-person"></i> {{ strtoupper($role->name) }}
                         </span>
                     </td>
-                    <td>
+                    <td class="py-3 px-4">
                         @if($isAdmin)
-                            <span class="badge bg-primary me-1 mb-1"><i class="bi bi-star-fill me-1"></i> Full Access (Semua Fitur)</span>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-2xs">
+                                <i class="bi bi-star-fill"></i> Full Access (Semua Fitur)
+                            </span>
                         @elseif(!empty($perms) && is_array($perms))
+                            <div class="flex flex-wrap gap-1">
                             @foreach($perms as $pKey)
                                 @if(isset($availablePermissions[$pKey]))
-                                    <span class="badge bg-light text-dark border me-1 mb-1" title="{{ $availablePermissions[$pKey]['desc'] }}">
-                                        <i class="bi {{ $availablePermissions[$pKey]['icon'] }} text-success me-1"></i>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200" title="{{ $availablePermissions[$pKey]['desc'] }}">
+                                        <i class="bi {{ $availablePermissions[$pKey]['icon'] }} text-emerald-600"></i>
                                         {{ $availablePermissions[$pKey]['label'] }}
                                     </span>
                                 @else
-                                    <span class="badge bg-light text-dark border me-1 mb-1">{{ $pKey }}</span>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">{{ $pKey }}</span>
                                 @endif
                             @endforeach
+                            </div>
                         @else
-                            <span class="text-muted fst-italic small">Belum ada hak akses</span>
+                            <span class="text-slate-400 italic text-xs">Belum ada hak akses</span>
                         @endif
                     </td>
-                    <td class="text-muted small">{{ $role->created_at?->format('d M Y') ?? '-' }}</td>
-                    <td class="text-end">
-                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-outline-primary me-1" title="Edit Role & Permissions"><i class="bi bi-pencil"></i></a>
-                        @php
-                            $isDeletable = true;
-                            if ($isAdmin) {
-                                $isDeletable = false;
-                            } elseif (in_array($roleName, ['kasir', 'cashier'])) {
-                                $kasirCount = $roles->filter(fn($r) => in_array(strtolower(trim($r->name)), ['kasir', 'cashier']))->count();
-                                if ($kasirCount <= 1) $isDeletable = false;
-                            } elseif (in_array($roleName, ['pimpinan', 'leader'])) {
-                                $pimpinanCount = $roles->filter(fn($r) => in_array(strtolower(trim($r->name)), ['pimpinan', 'leader']))->count();
-                                if ($pimpinanCount <= 1) $isDeletable = false;
-                            }
-                        @endphp
+                    <td class="py-3 px-4 text-slate-400">{{ $role->created_at?->format('d M Y') ?? '-' }}</td>
+                    <td class="py-3 px-4 text-right">
+                        <div class="flex items-center justify-end gap-1">
+                            <a href="{{ route('roles.edit', $role->id) }}" class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition-colors" title="Edit Role & Hak Akses">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            @php
+                                $isDeletable = true;
+                                if ($isAdmin) {
+                                    $isDeletable = false;
+                                } elseif (in_array($roleName, ['kasir', 'cashier'])) {
+                                    $kasirCount = $roles->filter(fn($r) => in_array(strtolower(trim($r->name)), ['kasir', 'cashier']))->count();
+                                    if ($kasirCount <= 1) $isDeletable = false;
+                                } elseif (in_array($roleName, ['pimpinan', 'leader'])) {
+                                    $pimpinanCount = $roles->filter(fn($r) => in_array(strtolower(trim($r->name)), ['pimpinan', 'leader']))->count();
+                                    if ($pimpinanCount <= 1) $isDeletable = false;
+                                }
+                            @endphp
 
-                        @if($isDeletable)
-                        <form action="{{ route('roles.destroy', $role->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus role {{ $role->name }}?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Role"><i class="bi bi-trash"></i></button>
-                        </form>
-                        @endif
+                            @if($isDeletable)
+                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus role {{ $role->name }}?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer" title="Hapus Role">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                            @endif
+                        </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-4 text-muted">Belum ada role yang terdaftar.</td>
+                    <td colspan="5" class="text-center py-8 text-slate-400">Belum ada role yang terdaftar.</td>
                 </tr>
                 @endforelse
             </tbody>
