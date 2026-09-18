@@ -4,7 +4,7 @@
 <div class="mb-2 flex flex-col md:flex-row md:items-center justify-between gap-4">
     <div>
         <div class="flex items-center gap-2">
-            <h1 class="text-xl font-black text-amber-100 uppercase tracking-wider font-mono">MONITORING STOK PRODUK</h1>
+            <h1 class="text-xl font-black text-amber-100 tracking-wider font-mono">Monitoring Stok Produk</h1>
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-900/40 text-amber-300 font-semibold border border-amber-700/40">INVENTORY CONTROL</span>
         </div>
         <p class="text-xs text-stone-400 mt-1">Informasi ketersediaan stok fisik barang resto KETARA</p>

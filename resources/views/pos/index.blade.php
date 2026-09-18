@@ -7,7 +7,7 @@
             <h1 class="text-xl font-black text-amber-100 uppercase tracking-wider font-mono">MESIN KASIR (POS)</h1>
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-900/40 text-amber-300 font-semibold border border-amber-700/40">OPERATIONAL MODE</span>
         </div>
-        <p class="text-xs text-stone-400 mt-1">Terminal Transaksi Penjualan Resto KETARA PPKD Jakarta Pusat</p>
+        <p class="text-xs text-stone-400 mt-1">Terminal Transaksi Penjualan Point of Sales Resto KETARA PPKD Jakarta Pusat</p>
     </div>
     <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-2 text-[11px] font-mono">
