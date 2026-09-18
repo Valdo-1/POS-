@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full bg-[#080604] text-stone-100 antialiased selection:bg-amber-900/40 selection:text-amber-200">
 
 <head>
     <meta charset="UTF-8">
@@ -14,33 +14,42 @@
     @include('inc.css')
 </head>
 
-<body class="bg-slate-100 text-slate-900 font-sans min-h-screen antialiased">
+<body class="min-h-screen flex flex-col font-sans ambient-coffee-bg relative text-stone-200 antialiased selection:bg-amber-900/50 overflow-x-hidden">
+
+    <!-- Ambient Amber Glow Orbs -->
+    <div class="fixed -top-32 -left-32 w-[30rem] h-[30rem] bg-amber-800/15 rounded-full blur-[100px] pointer-events-none warm-orb z-0"></div>
+    <div class="fixed -bottom-36 right-10 w-[32rem] h-[32rem] bg-amber-950/25 rounded-full blur-[110px] pointer-events-none warm-orb z-0" style="animation-delay: 4s;"></div>
 
     <!-- ==========================================
-         START: Sidebar Component (KETARA Emerald Dark Mode)
+         START: Sidebar Component (Dark Warm Espresso)
          ========================================== -->
-    <aside class="sidebar-wrapper fixed inset-y-0 left-0 w-64 bg-emerald-950 text-white flex flex-col z-30 shadow-2xl transition-transform duration-300 border-r border-emerald-900/60" id="sidebar">
+    <aside class="sidebar-wrapper fixed inset-y-0 left-0 w-64 bg-[#0d0a08]/95 backdrop-blur-2xl text-stone-200 flex flex-col z-30 shadow-2xl transition-transform duration-300 border-r border-amber-900/30 -translate-x-full xl:translate-x-0" id="sidebar">
         <!-- Brand Logo / Identity -->
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-6 py-5 border-b border-emerald-900/80 hover:bg-emerald-900/40 transition-colors">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-emerald-950/40">
-                <i class="bi bi-cup-hot-fill text-xl"></i>
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-3.5 px-6 py-5 border-b border-amber-900/30 hover:bg-amber-950/40 transition-colors">
+            <div class="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-700 via-amber-600 to-amber-400 p-[1px] shadow-glow-amber shrink-0">
+                <div class="w-full h-full bg-[#100b08] rounded-[11px] flex items-center justify-center">
+                    <i data-lucide="coffee" class="w-4 h-4 text-amber-300"></i>
+                </div>
             </div>
             <div>
-                <span class="font-black text-xl tracking-wider text-white bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-white to-teal-200 block">KETARA</span>
-                <span class="text-[10px] text-emerald-400 font-medium tracking-wide uppercase block -mt-1">Point of Sales</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-base font-black tracking-wider text-amber-100 uppercase">KETARA</span>
+                    <span class="text-[9px] font-mono tracking-widest px-1.5 py-0.5 rounded bg-amber-900/40 text-amber-300 border border-amber-700/40 font-semibold uppercase">POS</span>
+                </div>
+                <p class="text-[10px] text-stone-400 font-medium tracking-wide">PPKD Jakarta Pusat</p>
             </div>
         </a>
 
         <!-- Navigation Menu -->
-        <div class="flex-grow overflow-y-auto px-4 py-4 space-y-6">
+        <div class="flex-grow overflow-y-auto px-4 py-5 space-y-6">
             <!-- Group: Menu Utama -->
             <div>
-                <div class="px-3 text-[11px] font-bold text-emerald-400/80 uppercase tracking-wider mb-2">Main Menu</div>
-                <ul class="space-y-1">
+                <div class="px-3 text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-widest mb-2.5">Main Navigation</div>
+                <ul class="space-y-1.5">
                     <li>
                         <a href="{{ route('dashboard') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-grid-fill text-lg {{ request()->routeIs('dashboard') ? 'text-white' : 'text-emerald-400' }}"></i>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4 {{ request()->routeIs('dashboard') ? 'text-amber-300' : 'text-stone-500' }}"></i>
                             <span>DASHBOARD</span>
                         </a>
                     </li>
@@ -49,9 +58,9 @@
                     @if(Auth::check() && Auth::user()->hasPermission('pos'))
                     <li>
                         <a href="{{ route('transactions.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('transactions.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-cart-check-fill text-lg {{ request()->routeIs('transactions.*') ? 'text-white' : 'text-emerald-400' }}"></i>
-                            <span class="font-bold">PESANAN DISINI</span>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 {{ request()->routeIs('transactions.*') ? 'bg-gradient-to-r from-amber-700 to-amber-600 text-amber-50 shadow-glow-amber border border-amber-500/40' : 'text-amber-300 hover:bg-amber-900/30 border border-amber-800/30' }}">
+                            <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-300"></i>
+                            <span>PESANAN DISINI (POS)</span>
                         </a>
                     </li>
                     @endif
@@ -60,8 +69,8 @@
                     @if(Auth::check() && Auth::user()->hasPermission('stock'))
                     <li>
                         <a href="{{ route('stock.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('stock.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-boxes text-lg {{ request()->routeIs('stock.*') ? 'text-white' : 'text-emerald-400' }}"></i>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('stock.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="boxes" class="w-4 h-4 {{ request()->routeIs('stock.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
                             <span>STOK PRODUK</span>
                         </a>
                     </li>
@@ -71,8 +80,8 @@
                     @if(Auth::check() && Auth::user()->hasPermission('reports'))
                     <li>
                         <a href="{{ route('reports.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('reports.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-graph-up-arrow text-lg {{ request()->routeIs('reports.*') ? 'text-white' : 'text-emerald-400' }}"></i>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('reports.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="trending-up" class="w-4 h-4 {{ request()->routeIs('reports.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
                             <span>LAPORAN PENJUALAN</span>
                         </a>
                     </li>
@@ -83,14 +92,14 @@
             {{-- grup master data --}}
             @if(Auth::check() && (Auth::user()->hasPermission('roles') || Auth::user()->hasPermission('users') || Auth::user()->hasPermission('categories') || Auth::user()->hasPermission('products')))
             <div>
-                <div class="px-3 text-[11px] font-bold text-emerald-400/80 uppercase tracking-wider mb-2">Master Data</div>
-                <ul class="space-y-1">
+                <div class="px-3 text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-widest mb-2.5">Master Controls</div>
+                <ul class="space-y-1.5">
                     @if(Auth::user()->hasPermission('roles'))
                     <li>
                         <a href="{{ route('roles.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('roles.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-shield-lock text-lg {{ request()->routeIs('roles.*') ? 'text-white' : 'text-emerald-400' }}"></i>
-                            <span>Roles</span>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('roles.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="shield-check" class="w-4 h-4 {{ request()->routeIs('roles.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
+                            <span>Roles & Izin</span>
                         </a>
                     </li>
                     @endif
@@ -98,9 +107,9 @@
                     @if(Auth::user()->hasPermission('users'))
                     <li>
                         <a href="{{ route('users.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('users.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-people text-lg {{ request()->routeIs('users.*') ? 'text-white' : 'text-emerald-400' }}"></i>
-                            <span>Users</span>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('users.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('users.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
+                            <span>Kelola User</span>
                         </a>
                     </li>
                     @endif
@@ -108,9 +117,9 @@
                     @if(Auth::user()->hasPermission('categories'))
                     <li>
                         <a href="{{ route('categories.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('categories.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-tags text-lg {{ request()->routeIs('categories.*') ? 'text-white' : 'text-emerald-400' }}"></i>
-                            <span>Categories</span>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('categories.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="tags" class="w-4 h-4 {{ request()->routeIs('categories.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
+                            <span>Kategori Menu</span>
                         </a>
                     </li>
                     @endif
@@ -118,9 +127,9 @@
                     @if(Auth::user()->hasPermission('products'))
                     <li>
                         <a href="{{ route('products.index') }}" 
-                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 {{ request()->routeIs('products.*') ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 font-bold' : 'text-emerald-100/80 hover:bg-emerald-900/60 hover:text-white' }}">
-                            <i class="bi bi-box-seam text-lg {{ request()->routeIs('products.*') ? 'text-white' : 'text-emerald-400' }}"></i>
-                            <span>Products</span>
+                           class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->routeIs('products.*') ? 'bg-amber-900/40 border border-amber-600/40 text-amber-200 shadow-sm' : 'text-stone-400 hover:text-amber-200 hover:bg-stone-900/60' }}">
+                            <i data-lucide="package" class="w-4 h-4 {{ request()->routeIs('products.*') ? 'text-amber-300' : 'text-stone-500' }}"></i>
+                            <span>Katalog Produk</span>
                         </a>
                     </li>
                     @endif
@@ -130,12 +139,12 @@
         </div>
 
         <!-- Sidebar Profile Card (Dynamic Footer) -->
-        <div class="p-4 border-t border-emerald-900/80 bg-emerald-950/80">
-            <div class="flex items-center gap-3 bg-emerald-900/50 p-2.5 rounded-xl border border-emerald-800/50">
-                <img src="{{ Auth::user()->avatar_url }}" alt="Profile Image" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500 shadow-sm">
-                <div class="overflow-hidden">
-                    <div class="font-bold text-sm text-white truncate max-w-[130px]">{{ Auth::user()->name ?? 'User' }}</div>
-                    <div class="text-xs text-emerald-300/80 font-medium truncate">{{ ucfirst(Auth::user()->role->name ?? 'Role') }}</div>
+        <div class="p-4 border-t border-amber-900/30 bg-[#080604]/80">
+            <div class="flex items-center gap-3 bg-stone-900/70 p-3 rounded-2xl border border-amber-900/30">
+                <img src="{{ Auth::user()->avatar_url }}" alt="Profile Image" class="w-9 h-9 rounded-xl object-cover border border-amber-500/40 shadow-sm shrink-0">
+                <div class="overflow-hidden min-w-0">
+                    <div class="font-bold text-xs text-amber-100 truncate">{{ Auth::user()->name ?? 'User' }}</div>
+                    <div class="text-[10px] font-mono text-amber-400/80 truncate uppercase tracking-wider">{{ Auth::user()->role->name ?? 'Role' }}</div>
                 </div>
             </div>
         </div>
@@ -148,64 +157,65 @@
     <!-- ==========================================
          START: Main Content Area
          ========================================== -->
-    <div class="main-wrapper xl:pl-64 flex flex-col min-h-screen transition-all duration-300">
+    <div class="main-wrapper xl:pl-64 flex flex-col min-h-screen z-10 transition-all duration-300">
 
         <!-- START: Top Navbar Component -->
-        <header class="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 lg:px-8 py-3 flex items-center justify-between shadow-xs">
+        <header class="sticky top-0 z-20 bg-[#0c0907]/85 backdrop-blur-md border-b border-amber-900/20 px-4 lg:px-8 h-16 flex items-center justify-between shrink-0 shadow-sm">
             <div class="flex items-center gap-3">
                 <!-- Mobile sidebar toggle -->
-                <button class="xl:hidden w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors" 
+                <button class="xl:hidden w-9 h-9 rounded-xl bg-stone-900 border border-amber-900/30 text-amber-300 flex items-center justify-center hover:bg-stone-800 transition" 
                         id="sidebar-toggle" aria-label="Toggle Navigation">
-                    <i class="bi bi-list text-xl"></i>
+                    <i data-lucide="menu" class="w-4 h-4"></i>
                 </button>
 
                 <!-- Resto Location & Live Operational Clock -->
-                <div class="hidden md:flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-200 text-xs shadow-2xs">
-                    <i class="bi bi-shop text-emerald-600 text-sm"></i>
-                    <span class="font-semibold text-slate-700">Coffe Shop PPKD Jakarta Pusat</span>
-                    <span class="text-slate-300">|</span>
-                    <i class="bi bi-clock text-slate-400"></i>
-                    <span id="live-resto-clock" class="font-bold text-emerald-700 font-mono">--:--:-- WIB</span>
+                <div class="flex items-center gap-3 text-xs font-mono">
+                    <div class="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-stone-900/70 border border-amber-900/30 text-stone-300">
+                        <i data-lucide="store" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span class="font-semibold text-[11px]">KETARA PPKD Jakarta Pusat</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-stone-900/70 border border-amber-900/30 text-stone-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                        <span id="live-resto-clock" class="tabular-nums font-medium text-[11px] text-amber-200/90">--:--:-- WIB</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Right actions -->
             <div class="flex items-center gap-3">
-                <!-- Active Shift Status -->
-                <div class="hidden lg:flex items-center">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Shift Operasional Aktif
-                    </span>
+                <!-- Active User Badge -->
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-stone-900/70 border border-amber-900/30 text-amber-300 font-mono text-[11px] font-semibold uppercase">
+                    <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span>{{ Auth::user()->role->name ?? 'POS' }}: {{ Auth::user()->name }}</span>
                 </div>
 
                 <!-- Fullscreen Toggle -->
-                <button class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 transition-colors" 
+                <button class="w-9 h-9 rounded-xl bg-stone-900/80 border border-amber-900/30 text-stone-400 hover:text-amber-200 flex items-center justify-center hover:bg-stone-800 transition" 
                         aria-label="Toggle Fullscreen" id="btn-fullscreen" title="Mode Layar Penuh">
-                    <i class="bi bi-arrows-fullscreen"></i>
+                    <i data-lucide="maximize-2" class="w-4 h-4"></i>
                 </button>
 
                 <!-- Profile Dropdown -->
                 <div class="relative" id="profile-dropdown-container">
-                    <button class="flex items-center gap-2.5 p-1.5 pr-3 rounded-full bg-slate-100 hover:bg-emerald-50 transition-colors border border-slate-200 cursor-pointer" 
+                    <button class="flex items-center gap-2.5 p-1 pr-3 rounded-xl bg-stone-900/80 hover:bg-stone-800 transition border border-amber-900/30 cursor-pointer" 
                             type="button" id="profile-dropdown-btn">
-                        <img src="{{ Auth::user()->avatar_url }}" alt="Profile Image" class="w-8 h-8 rounded-full object-cover border border-emerald-500">
-                        <span class="hidden md:inline font-bold text-xs text-slate-800">{{ Auth::user()->name ?? 'User' }}</span>
-                        <i class="bi bi-chevron-down text-xs text-slate-500"></i>
+                        <img src="{{ Auth::user()->avatar_url }}" alt="Profile Image" class="w-7 h-7 rounded-lg object-cover border border-amber-500/40">
+                        <span class="hidden md:inline font-bold text-xs text-amber-100">{{ Auth::user()->name ?? 'User' }}</span>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-stone-400"></i>
                     </button>
                     
-                    <div class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50" id="profile-dropdown-menu">
-                        <div class="px-4 py-2 border-b border-slate-100">
-                            <div class="font-bold text-sm text-slate-800">Halo, {{ Auth::user()->name ?? 'User' }}!</div>
-                            <div class="text-xs text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
-                                <i class="bi bi-shield me-1"></i> Level: {{ ucfirst(Auth::user()->role->name ?? '-') }}
+                    <div class="hidden absolute right-0 mt-2 w-56 glass-espresso rounded-2xl shadow-2xl border border-amber-700/30 py-2 z-50" id="profile-dropdown-menu">
+                        <div class="px-4 py-2.5 border-b border-amber-900/30">
+                            <div class="font-bold text-xs text-amber-100">Halo, {{ Auth::user()->name ?? 'User' }}!</div>
+                            <div class="text-[10px] font-mono text-amber-400 font-semibold flex items-center gap-1 mt-0.5 uppercase">
+                                <i data-lucide="shield" class="w-3 h-3 me-1 text-amber-400"></i> Level: {{ Auth::user()->role->name ?? '-' }}
                             </div>
                         </div>
                         <div class="py-1">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2 transition-colors cursor-pointer">
-                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                <button type="submit" class="w-full px-4 py-2 text-left text-xs font-semibold text-rose-400 hover:bg-rose-950/40 flex items-center gap-2 transition cursor-pointer">
+                                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout Aplikasi
                                 </button>
                             </form>
                         </div>
@@ -216,27 +226,27 @@
         <!-- END: Top Navbar Component -->
 
         <!-- START: Main Body Container -->
-        <main class="flex-grow p-4 lg:p-8 max-w-7xl w-full mx-auto">
+        <main class="flex-grow p-4 lg:p-7 max-w-7xl w-full mx-auto space-y-6">
             <!-- Page Header Banner -->
             @yield('header')
 
             @if(session('success'))
-            <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center justify-between shadow-xs">
-                <div class="flex items-center gap-2">
-                    <i class="bi bi-check-circle-fill text-emerald-600 text-lg"></i>
-                    <span>{{ session('success') }}</span>
+            <div class="p-4 rounded-2xl bg-amber-950/40 border border-amber-600/40 text-amber-200 text-xs flex items-center justify-between shadow-lg backdrop-blur-md">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                    <span class="font-medium">{{ session('success') }}</span>
                 </div>
-                <button type="button" class="text-emerald-600 hover:text-emerald-800" onclick="this.parentElement.remove()"><i class="bi bi-x-lg"></i></button>
+                <button type="button" class="text-stone-400 hover:text-amber-200" onclick="this.parentElement.remove()"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
             @endif
 
             @if(session('error'))
-            <div class="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center justify-between shadow-xs">
-                <div class="flex items-center gap-2">
-                    <i class="bi bi-exclamation-triangle-fill text-rose-600 text-lg"></i>
-                    <span>{{ session('error') }}</span>
+            <div class="p-4 rounded-2xl bg-rose-950/40 border border-rose-600/40 text-rose-200 text-xs flex items-center justify-between shadow-lg backdrop-blur-md">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0"></i>
+                    <span class="font-medium">{{ session('error') }}</span>
                 </div>
-                <button type="button" class="text-rose-600 hover:text-rose-800" onclick="this.parentElement.remove()"><i class="bi bi-x-lg"></i></button>
+                <button type="button" class="text-stone-400 hover:text-rose-200" onclick="this.parentElement.remove()"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
             @endif
 
@@ -261,18 +271,12 @@
             // Live Resto Clock
             function updateRestoClock() {
                 const now = new Date();
-                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                const day = days[now.getDay()];
-                const date = now.getDate();
-                const month = months[now.getMonth()];
-                const year = now.getFullYear();
                 const hours = String(now.getHours()).padStart(2, '0');
                 const minutes = String(now.getMinutes()).padStart(2, '0');
                 const seconds = String(now.getSeconds()).padStart(2, '0');
                 const clockEl = document.getElementById('live-resto-clock');
                 if (clockEl) {
-                    clockEl.innerText = `${day}, ${date} ${month} ${year} | ${hours}:${minutes}:${seconds} WIB`;
+                    clockEl.innerText = `${hours}:${minutes}:${seconds} WIB`;
                 }
             }
             setInterval(updateRestoClock, 1000);
@@ -312,6 +316,10 @@
                         }
                     }
                 });
+            }
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         });
     </script>

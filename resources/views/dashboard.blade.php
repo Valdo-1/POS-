@@ -1,40 +1,49 @@
 @extends('app')
 
 @section('header')
-<div class="mb-6">
-    <h1 class="text-2xl font-black text-slate-800 tracking-tight">DASHBOARD</h1>
-    <p class="text-slate-500 text-sm">Selamat datang di <strong class="text-emerald-700 font-extrabold">KETARA Point of Sales</strong> PPKD Jakarta Pusat.</p>
+<div class="mb-2">
+    <div class="flex items-center gap-2">
+        <h1 class="text-xl font-black text-amber-100 uppercase tracking-wider font-mono">DASHBOARD UTAMA</h1>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-900/40 text-amber-300 font-semibold border border-amber-700/40">SYSTEM READY</span>
+    </div>
+    <p class="text-xs text-stone-400 mt-1">Ringkasan operasional dan statistik real-time aplikasi <strong class="text-amber-300 font-bold">KETARA POS</strong>.</p>
 </div>
 @endsection
 
 @section('content')
 <!-- Banner Sapaan & Quick Action Shortcuts -->
-<div class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 text-white rounded-3xl p-6 lg:p-8 mb-8 shadow-xl shadow-emerald-950/20 relative overflow-hidden">
-    <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="glass-espresso rounded-3xl p-6 lg:p-7 shadow-glass-warm border border-amber-900/30 relative overflow-hidden">
+    <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-amber-700/15 rounded-full blur-3xl pointer-events-none"></div>
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
         <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold mb-3">
-                <i class="bi bi-person-badge"></i> Role: {{ ucfirst(Auth::user()->role->name ?? 'User') }}
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-900/40 border border-amber-700/40 text-amber-300 text-[10px] font-mono font-semibold uppercase mb-3">
+                <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i> Level Hak Akses: {{ Auth::user()->role->name ?? 'User' }}
             </div>
-            <h2 class="text-2xl lg:text-3xl font-black tracking-tight">Halo, {{ Auth::user()->name }}! 👋</h2>
-            <p class="text-emerald-100/80 text-sm mt-1 max-w-xl">Sistem KETARA siap digunakan untuk memproses transaksi kasir, pemantauan stok produk, dan laporan omzet secara efisien.</p>
+            <h2 class="text-2xl lg:text-3xl font-extrabold tracking-tight text-amber-100">Selamat Datang, {{ Auth::user()->name }} 👋</h2>
+            <p class="text-stone-400 text-xs mt-1.5 max-w-xl leading-relaxed">Sistem KETARA siap digunakan untuk memproses transaksi kasir, pemantauan stok produk, dan laporan omzet secara efisien.</p>
         </div>
         <div class="flex flex-wrap items-center gap-3">
             @if(Auth::user()->hasPermission('pos'))
-                <a href="{{ route('transactions.index') }}" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm shadow-lg shadow-emerald-900/40 flex items-center gap-2 transition-all duration-200">
-                    <i class="bi bi-cart-check text-lg"></i>
+                <a href="{{ route('transactions.index') }}" 
+                   onclick="playWarmChime('tap')"
+                   class="h-11 px-5 rounded-2xl bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:shadow-glow-bronze text-amber-50 font-bold text-xs uppercase tracking-wider transition-all duration-300 border border-amber-500/40 flex items-center gap-2 shadow-lg active:scale-[0.98]">
+                    <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-200"></i>
                     <span>Buka Mesin POS</span>
                 </a>
             @endif
             @if(Auth::user()->hasPermission('reports'))
-                <a href="{{ route('reports.index') }}" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-sm flex items-center gap-2 transition-all duration-200 backdrop-blur-md">
-                    <i class="bi bi-graph-up text-lg"></i>
-                    <span>Lihat Laporan</span>
+                <a href="{{ route('reports.index') }}" 
+                   onclick="playWarmChime('tap')"
+                   class="h-11 px-4 rounded-2xl bg-stone-900/80 hover:bg-stone-800 border border-amber-900/30 text-amber-200 font-semibold text-xs transition flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-amber-400"></i>
+                    <span>Laporan Omzet</span>
                 </a>
             @endif
             @if(Auth::user()->hasPermission('stock'))
-                <a href="{{ route('stock.index') }}" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-sm flex items-center gap-2 transition-all duration-200 backdrop-blur-md">
-                    <i class="bi bi-boxes text-lg"></i>
+                <a href="{{ route('stock.index') }}" 
+                   onclick="playWarmChime('tap')"
+                   class="h-11 px-4 rounded-2xl bg-stone-900/80 hover:bg-stone-800 border border-amber-900/30 text-amber-200 font-semibold text-xs transition flex items-center gap-2">
+                    <i data-lucide="boxes" class="w-4 h-4 text-amber-400"></i>
                     <span>Cek Stok</span>
                 </a>
             @endif
@@ -43,120 +52,132 @@
 </div>
 
 <!-- 4 Kartu Ringkasan Cepat -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-    <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
-                <i class="bi bi-box-seam"></i>
-            </div>
-            <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Produk</div>
-                <div class="text-2xl font-black text-slate-800">{{ $productCount }}</div>
-            </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="card-espresso rounded-2xl p-5 flex items-center justify-between">
+        <div class="space-y-1">
+            <span class="text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-wider block">Total Katalog Produk</span>
+            <div class="text-2xl font-black font-mono text-amber-100 tabular-nums">{{ $productCount }}</div>
+            <span class="text-[10px] text-stone-500 font-mono">ITEM TERSEDA</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-300 flex items-center justify-center shadow-inner">
+            <i data-lucide="package" class="w-6 h-6"></i>
         </div>
     </div>
     
-    <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-2xl font-bold">
-                <i class="bi bi-cart-check"></i>
-            </div>
-            <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Transaksi</div>
-                <div class="text-2xl font-black text-slate-800">{{ $orderCount }}</div>
-            </div>
+    <div class="card-espresso rounded-2xl p-5 flex items-center justify-between">
+        <div class="space-y-1">
+            <span class="text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-wider block">Total Transaksi</span>
+            <div class="text-2xl font-black font-mono text-amber-100 tabular-nums">{{ $orderCount }}</div>
+            <span class="text-[10px] text-stone-500 font-mono">PESANAN TERSELESAIKAN</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-300 flex items-center justify-center shadow-inner">
+            <i data-lucide="receipt" class="w-6 h-6"></i>
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl font-bold">
-                <i class="bi bi-cash-stack"></i>
-            </div>
-            <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Penjualan</div>
-                <div class="text-xl font-black text-slate-800">Rp {{ number_format($totalSales, 0, ',', '.') }}</div>
-            </div>
+    <div class="card-espresso rounded-2xl p-5 flex items-center justify-between">
+        <div class="space-y-1">
+            <span class="text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-wider block">Total Penjualan</span>
+            <div class="text-xl font-black font-mono text-amber-300 tabular-nums">Rp {{ number_format($totalSales, 0, ',', '.') }}</div>
+            <span class="text-[10px] text-stone-500 font-mono">AKUMULASI OMZET</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-300 flex items-center justify-center shadow-inner">
+            <i data-lucide="banknote" class="w-6 h-6"></i>
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
-                <i class="bi bi-tags"></i>
-            </div>
-            <div>
-                <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Kategori Menu</div>
-                <div class="text-2xl font-black text-slate-800">{{ $categoryCount }}</div>
-            </div>
+    <div class="card-espresso rounded-2xl p-5 flex items-center justify-between">
+        <div class="space-y-1">
+            <span class="text-[10px] font-mono font-bold text-amber-400/80 uppercase tracking-wider block">Kategori Menu</span>
+            <div class="text-2xl font-black font-mono text-amber-100 tabular-nums">{{ $categoryCount }}</div>
+            <span class="text-[10px] text-stone-500 font-mono">KATEGORI AKTIF</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-300 flex items-center justify-center shadow-inner">
+            <i data-lucide="tags" class="w-6 h-6"></i>
         </div>
     </div>
 </div>
 
 <!-- Informasi Hak Akses & Panduan Navigasi -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
-        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <i class="bi bi-shield-check text-emerald-600"></i>
+    <div class="card-espresso rounded-2xl p-6">
+        <h3 class="text-xs font-bold font-mono uppercase tracking-widest text-amber-300 mb-4 flex items-center gap-2 border-b border-amber-900/30 pb-3">
+            <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
             <span>Ringkasan Hak Akses Sistem</span>
         </h3>
-        <ul class="space-y-4 text-sm text-slate-600">
-            <li class="pb-3 border-b border-slate-100">
-                <strong class="text-slate-800 block mb-0.5">Admin / Administrator:</strong>
-                <p class="text-xs text-slate-500">Memiliki akses penuh ke seluruh master data (Produk, Categories, Users, Roles), serta monitoring transaksi dan laporan penjualan.</p>
+        <ul class="space-y-3.5 text-xs">
+            <li class="pb-3 border-b border-amber-900/20">
+                <strong class="text-amber-100 block mb-0.5">Admin / Administrator:</strong>
+                <p class="text-[11px] text-stone-400 leading-relaxed font-light">Memiliki akses penuh ke seluruh master data (Produk, Kategori, Users, Roles), serta monitoring transaksi dan laporan penjualan.</p>
             </li>
-            <li class="pb-3 border-b border-slate-100">
-                <strong class="text-slate-800 block mb-0.5">Kasir:</strong>
-                <p class="text-xs text-slate-500">Akses khusus mesin kasir POS untuk pemprosesan pesanan dan pemantauan ketersediaan stok barang.</p>
+            <li class="pb-3 border-b border-amber-900/20">
+                <strong class="text-amber-100 block mb-0.5">Kasir:</strong>
+                <p class="text-[11px] text-stone-400 leading-relaxed font-light">Akses khusus mesin kasir POS untuk pemprosesan pesanan dan pemantauan ketersediaan stok barang.</p>
             </li>
             <li>
-                <strong class="text-slate-800 block mb-0.5">Pimpinan & Role Kustom (misal: Gudang):</strong>
-                <p class="text-xs text-slate-500">Memiliki izin fitur yang dikonfigurasikan secara dinamis melalui menu Kelola Role & Hak Akses.</p>
+                <strong class="text-amber-100 block mb-0.5">Pimpinan & Role Kustom:</strong>
+                <p class="text-[11px] text-stone-400 leading-relaxed font-light">Memiliki izin fitur yang dikonfigurasikan secara dinamis melalui menu Kelola Role & Hak Akses.</p>
             </li>
         </ul>
     </div>
 
-    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs">
-        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <i class="bi bi-compass text-emerald-600"></i>
+    <div class="card-espresso rounded-2xl p-6">
+        <h3 class="text-xs font-bold font-mono uppercase tracking-widest text-amber-300 mb-4 flex items-center gap-2 border-b border-amber-900/30 pb-3">
+            <i data-lucide="compass" class="w-4 h-4 text-amber-400"></i>
             <span>Pintas Fitur Utama</span>
         </h3>
-        <div class="space-y-2.5">
+        <div class="space-y-2">
             @if(Auth::user()->hasPermission('users'))
-            <a href="{{ route('users.index') }}" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-semibold text-sm transition-all duration-200 group">
-                <i class="bi bi-people text-lg text-slate-400 group-hover:text-emerald-600"></i>
-                <span>Kelola User & Role</span>
+            <a href="{{ route('users.index') }}" class="flex items-center justify-between p-3 rounded-xl bg-stone-900/40 hover:bg-stone-800/80 border border-amber-900/20 hover:border-amber-700/40 text-stone-200 hover:text-amber-200 transition group text-xs font-medium">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="users" class="w-4 h-4 text-stone-400 group-hover:text-amber-400"></i>
+                    <span>Kelola User & Role System</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-stone-600 group-hover:text-amber-400"></i>
             </a>
             @endif
 
             @if(Auth::user()->hasPermission('products'))
-            <a href="{{ route('products.index') }}" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-semibold text-sm transition-all duration-200 group">
-                <i class="bi bi-box-seam text-lg text-slate-400 group-hover:text-emerald-600"></i>
-                <span>Kelola Master Produk</span>
+            <a href="{{ route('products.index') }}" class="flex items-center justify-between p-3 rounded-xl bg-stone-900/40 hover:bg-stone-800/80 border border-amber-900/20 hover:border-amber-700/40 text-stone-200 hover:text-amber-200 transition group text-xs font-medium">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="package" class="w-4 h-4 text-stone-400 group-hover:text-amber-400"></i>
+                    <span>Kelola Master Katalog Produk</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-stone-600 group-hover:text-amber-400"></i>
             </a>
             @endif
 
             @if(Auth::user()->hasPermission('stock'))
-            <a href="{{ route('stock.index') }}" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-semibold text-sm transition-all duration-200 group">
-                <i class="bi bi-boxes text-lg text-slate-400 group-hover:text-emerald-600"></i>
-                <span>Buka Monitoring Stok Produk</span>
+            <a href="{{ route('stock.index') }}" class="flex items-center justify-between p-3 rounded-xl bg-stone-900/40 hover:bg-stone-800/80 border border-amber-900/20 hover:border-amber-700/40 text-stone-200 hover:text-amber-200 transition group text-xs font-medium">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="boxes" class="w-4 h-4 text-stone-400 group-hover:text-amber-400"></i>
+                    <span>Buka Monitoring Stok Produk</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-stone-600 group-hover:text-amber-400"></i>
             </a>
             @endif
 
             @if(Auth::user()->hasPermission('pos'))
-            <a href="{{ route('transactions.index') }}" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-semibold text-sm transition-all duration-200 group">
-                <i class="bi bi-cart3 text-lg text-slate-400 group-hover:text-emerald-600"></i>
-                <span>Buka Mesin Kasir POS</span>
+            <a href="{{ route('transactions.index') }}" class="flex items-center justify-between p-3 rounded-xl bg-stone-900/40 hover:bg-stone-800/80 border border-amber-900/20 hover:border-amber-700/40 text-stone-200 hover:text-amber-200 transition group text-xs font-medium">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="shopping-bag" class="w-4 h-4 text-stone-400 group-hover:text-amber-400"></i>
+                    <span>Buka Mesin Kasir POS</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-stone-600 group-hover:text-amber-400"></i>
             </a>
             @endif
 
             @if(Auth::user()->hasPermission('reports'))
-            <a href="{{ route('reports.index') }}" class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 text-slate-700 hover:text-emerald-700 font-semibold text-sm transition-all duration-200 group">
-                <i class="bi bi-file-earmark-bar-graph text-lg text-slate-400 group-hover:text-emerald-600"></i>
-                <span>Buka Laporan Penjualan & Omzet</span>
+            <a href="{{ route('reports.index') }}" class="flex items-center justify-between p-3 rounded-xl bg-stone-900/40 hover:bg-stone-800/80 border border-amber-900/20 hover:border-amber-700/40 text-stone-200 hover:text-amber-200 transition group text-xs font-medium">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-stone-400 group-hover:text-amber-400"></i>
+                    <span>Buka Laporan Penjualan & Omzet</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-stone-600 group-hover:text-amber-400"></i>
             </a>
             @endif
         </div>
     </div>
 </div>
 @endsection
+

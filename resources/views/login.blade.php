@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="h-full bg-[#080604] text-stone-100 antialiased selection:bg-amber-900/40 selection:text-amber-200">
 
 <head>
     <meta charset="UTF-8">
@@ -13,43 +13,49 @@
     @include('inc.css')
 </head>
 
-<body class="bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-900 min-h-screen flex items-center justify-center p-4 relative overflow-hidden font-sans">
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden font-sans ambient-coffee-bg text-stone-200">
     
-    <!-- Decorative background glow blobs -->
-    <div class="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Ambient Amber Glow Orbs -->
+    <div class="fixed -top-32 -left-32 w-[30rem] h-[30rem] bg-amber-800/15 rounded-full blur-[100px] pointer-events-none warm-orb z-0"></div>
+    <div class="fixed -bottom-36 right-10 w-[32rem] h-[32rem] bg-amber-950/25 rounded-full blur-[110px] pointer-events-none warm-orb z-0" style="animation-delay: 4s;"></div>
 
     <div class="w-full max-w-md relative z-10">
         <!-- Glassmorphism Container Card -->
-        <div class="bg-slate-900/80 backdrop-blur-xl border border-emerald-500/20 rounded-3xl p-8 shadow-2xl shadow-emerald-950/50">
-            
+        <div class="glass-espresso rounded-3xl p-8 border border-amber-700/30 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-20 -left-20 w-48 h-48 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
             <!-- Brand Identity -->
-            <div class="text-center mb-6">
-                <a href="#" class="inline-flex items-center justify-center gap-2 text-3xl font-black text-white tracking-wider mb-2">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white shadow-lg shadow-emerald-600/40">
-                        <i class="bi bi-cup-hot-fill text-2xl"></i>
+            <div class="text-center mb-8">
+                <a href="#" class="inline-flex items-center justify-center gap-3.5 mb-2 group">
+                    <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-700 via-amber-600 to-amber-400 p-[1px] shadow-glow-amber">
+                        <div class="w-full h-full bg-[#100b08] rounded-[15px] flex items-center justify-center">
+                            <i data-lucide="coffee" class="w-6 h-6 text-amber-300"></i>
+                        </div>
                     </div>
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 via-white to-teal-200">KETARA</span>
+                    <div class="text-left">
+                        <span class="text-2xl font-black tracking-wider text-amber-100 uppercase block">KETARA</span>
+                        <span class="text-[10px] font-mono tracking-widest text-amber-400 uppercase block -mt-1 font-semibold">POINT OF SALES</span>
+                    </div>
                 </a>
-                <p class="text-emerald-300/80 text-sm font-medium">Point of Sales Resto PPKD Jakarta Pusat</p>
+                <p class="text-xs text-stone-400 font-medium">Sistem Informasi Kasir PPKD Jakarta Pusat</p>
             </div>
 
             <!-- Flash Alert Success -->
             @if (session('success'))
-            <div class="mb-5 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-2">
-                <i class="bi bi-check-circle-fill text-emerald-400 text-lg"></i>
+            <div class="mb-5 p-4 rounded-2xl bg-amber-950/40 border border-amber-600/40 text-amber-200 text-xs flex items-center gap-2.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-amber-400 shrink-0"></i>
                 <span>{{ session('success') }}</span>
             </div>
             @endif
 
             <!-- Flash Alert Error -->
             @if ($errors->any())
-            <div class="mb-5 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm">
-                <div class="flex items-center gap-2 font-semibold mb-1">
-                    <i class="bi bi-exclamation-triangle-fill text-rose-400"></i>
-                    <span>Gagal Masuk</span>
+            <div class="mb-5 p-4 rounded-2xl bg-rose-950/40 border border-rose-600/40 text-rose-200 text-xs">
+                <div class="flex items-center gap-2 font-bold mb-1.5 text-rose-300">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400"></i>
+                    <span>Gagal Otentikasi</span>
                 </div>
-                <ul class="list-disc list-inside space-y-1 text-xs text-rose-200/90">
+                <ul class="list-disc list-inside space-y-1 text-[11px] text-rose-300/90 font-mono">
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                     @endforeach
@@ -63,43 +69,41 @@
                 
                 <!-- Email Field -->
                 <div>
-                    <label for="email" class="block text-xs font-bold uppercase tracking-wider text-emerald-200/80 mb-2">Email Address</label>
+                    <label for="email" class="block text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400/90 mb-2">Email Terminal</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-emerald-400/70">
-                            <i class="bi bi-envelope text-lg"></i>
-                        </div>
+                        <i data-lucide="mail" class="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                         <input name="email" type="email" id="email" 
                                value="{{ old('email') }}"
-                               class="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700/80 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition-all duration-200" 
+                               class="w-full h-11 pl-10 pr-4 rounded-xl bg-stone-900/80 border border-amber-900/30 text-xs text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500/60 transition font-sans" 
                                placeholder="admin@gmail.com" required>
                     </div>
                 </div>
 
                 <!-- Password Field -->
                 <div>
-                    <label for="password" class="block text-xs font-bold uppercase tracking-wider text-emerald-200/80 mb-2">Password</label>
+                    <label for="password" class="block text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400/90 mb-2">Kata Sandi</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-emerald-400/70">
-                            <i class="bi bi-shield-lock text-lg"></i>
-                        </div>
+                        <i data-lucide="lock" class="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                         <input name="password" type="password" id="password" 
-                               class="w-full pl-11 pr-11 py-3 bg-slate-800/80 border border-slate-700/80 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition-all duration-200" 
+                               class="w-full h-11 pl-10 pr-11 rounded-xl bg-stone-900/80 border border-amber-900/30 text-xs text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-500/60 transition font-sans" 
                                placeholder="••••••••" required>
-                        <button type="button" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors" id="toggle-password">
-                            <i class="bi bi-eye"></i>
+                        <button type="button" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-amber-300 transition" id="toggle-password">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/50 flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer text-sm">
+                <button type="submit" 
+                        onclick="playWarmChime('tap')"
+                        class="w-full h-12 mt-2 rounded-2xl bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:shadow-glow-bronze text-amber-50 font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 active:scale-[0.98] border border-amber-500/40 cursor-pointer shadow-lg">
                     <span>Masuk ke KETARA</span>
-                    <i class="bi bi-arrow-right"></i>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-amber-200"></i>
                 </button>
             </form>
 
-            <div class="mt-6 text-center border-t border-slate-800 pt-4">
-                <span class="text-xs text-slate-400">Point of Sales PPKD Jakarta Pusat &copy; {{ date('Y') }}</span>
+            <div class="mt-8 text-center border-t border-amber-900/30 pt-4">
+                <span class="text-[11px] font-mono text-stone-500">KETARA PPKD Jakarta Pusat &copy; {{ date('Y') }}</span>
             </div>
         </div>
     </div>
@@ -113,11 +117,10 @@
                 toggleBtn.addEventListener('click', function() {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
-                    const icon = this.querySelector('i');
-                    if (icon) {
-                        icon.className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
-                    }
                 });
+            }
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         });
     </script>
